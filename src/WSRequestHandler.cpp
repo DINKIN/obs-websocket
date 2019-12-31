@@ -138,7 +138,9 @@ QHash<QString, HandlerResponse(*)(WSRequestHandler*)> WSRequestHandler::messageM
 	{ "ListOutputs", WSRequestHandler::HandleListOutputs },
 	{ "GetOutputInfo", WSRequestHandler::HandleGetOutputInfo },
 	{ "StartOutput", WSRequestHandler::HandleStartOutput },
-	{ "StopOutput", WSRequestHandler::HandleStopOutput }
+	{ "StopOutput", WSRequestHandler::HandleStopOutput },
+
+	{ "ResetCropping", WSRequestHandler::HandleResetCropping },
 };
 
 QSet<QString> WSRequestHandler::authNotRequired {

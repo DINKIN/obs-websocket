@@ -186,4 +186,6 @@ class WSRequestHandler : public QObject {
 		static HandlerResponse HandleGetOutputInfo(WSRequestHandler* req);
 		static HandlerResponse HandleStartOutput(WSRequestHandler* req);
 		static HandlerResponse HandleStopOutput(WSRequestHandler* req);
+
+		static HandlerResponse HandleResetCropping(WSRequestHandler *req);
 };
