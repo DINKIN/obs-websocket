@@ -1568,3 +1568,52 @@ RpcResponse WSRequestHandler::TakeSourceScreenshot(const RpcRequest& request) {
 	obs_data_set_string(response, "sourceName", obs_source_get_name(source));
 	return request.success(response);
 }
+
+
+void enumFilters(obs_source_t* parent, obs_source_t* child, void* param) {
+	const char* id = obs_source_get_id(child);
+
+	if (strcmp(id, "gdq_crop_console_filter") == 0) {
+		obs_data_t* filtersettings = obs_source_get_settings(child);
+		obs_data_set_string(filtersettings, "console", "None");
+		obs_data_set_int(filtersettings, "left", 0);
+		obs_data_set_int(filtersettings, "top", 0);
+		obs_data_set_int(filtersettings, "right", 0);
+		obs_data_set_int(filtersettings, "bottom", 0);
+		obs_source_update(child, filtersettings);
+		obs_data_release(filtersettings);
+	}
+}
+
+bool enumSources(void* param, obs_source_t* source) {
+	if (!source) {
+		return true;
+	}
+
+	obs_source_enum_filters(source, enumFilters, param);
+	return true;
+}
+
+/**
+* Reset the settings for every GDQCrop Filter
+*
+* @api requests
+* @name ResetCropping
+* @category sources
+* @since 4.5.0
+*/
+RpcResponse WSRequestHandler::HandleResetCropping(const RpcRequest& request) {
+	obs_enum_sources(enumSources, NULL);
+
+	struct obs_frontend_source_list scenes = { 0 };
+	obs_frontend_get_scenes(&scenes);
+
+	for (size_t i = 0; i < scenes.sources.num; i++) {
+		obs_source_t* source = scenes.sources.array[i];
+		obs_source_enum_filters(source, enumFilters, NULL);
+	}
+
+	obs_frontend_source_list_free(&scenes);
+
+	return request.success();
+}

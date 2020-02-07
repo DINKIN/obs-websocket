@@ -142,7 +142,9 @@ const QHash<QString, RpcMethodHandler> WSRequestHandler::messageMap {
 	{ "ListOutputs", &WSRequestHandler::ListOutputs },
 	{ "GetOutputInfo", &WSRequestHandler::GetOutputInfo },
 	{ "StartOutput", &WSRequestHandler::StartOutput },
-	{ "StopOutput", &WSRequestHandler::StopOutput }
+	{ "StopOutput", &WSRequestHandler::StopOutput },
+
+	{ "ResetCropping", &WSRequestHandler::HandleResetCropping },
 };
 
 const QSet<QString> WSRequestHandler::authNotRequired {

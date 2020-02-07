@@ -161,4 +161,6 @@ class WSRequestHandler {
 		RpcResponse GetOutputInfo(const RpcRequest&);
 		RpcResponse StartOutput(const RpcRequest&);
 		RpcResponse StopOutput(const RpcRequest&);
+
+		RpcResponse HandleResetCropping(const RpcRequest&);
 };
